@@ -17,4 +17,5 @@ public class Parent extends User  {
                 this.childClassRoom.equals(classRoom) &&
                 this.childName.equals(name);
     }
+
 }
