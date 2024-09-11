@@ -9,7 +9,7 @@ public class Parent extends User  {
         this.childClassRoom = childClassRoom;
         this.childName = childName;
     }
-
+    
     @Override
     public boolean authenticate(String room, String grade, String classRoom, String name) {
         return this.room.equals(room) &&
