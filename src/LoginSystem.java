@@ -7,6 +7,7 @@ public class LoginSystem {
     private List<Parent> parents = new ArrayList<>();
 
     public LoginSystem() {
+        
         // 예제용 데이터 추가
         students.add(new Student("406", "1", "5", "문지우"));
         students.add(new Student("406", "1", "5", "박솔하"));
@@ -51,7 +52,8 @@ public class LoginSystem {
 
         if (authenticated) {
             System.out.println("로그인 되었습니다.");
-        } else {
+        } 
+        else {
             System.out.println("존재하지 않는 기숙사생입니다.");
         }
     }
@@ -60,5 +62,4 @@ public class LoginSystem {
         LoginSystem loginSystem = new LoginSystem();
         loginSystem.login();
     }
-
 }
