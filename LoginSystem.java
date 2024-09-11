@@ -12,7 +12,7 @@ public class LoginSystem {
         students.add(new Student("406", "1", "5", "박솔하"));
         students.add(new Student("406", "1", "5", "김다은"));
         students.add(new Student("406", "1", "4", "지수민"));
-    }git commit --amend
+    }
 
     public void login() {
         Scanner scanner = new Scanner(System.in);
@@ -50,7 +50,7 @@ public class LoginSystem {
         }
 
         if (authenticated) {
-            System.out.println("정상적으로 로그인 되었습니다.");
+            System.out.println("로그인 되었습니다.");
         } else {
             System.out.println("존재하지 않는 기숙사생입니다.");
         }
