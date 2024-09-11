@@ -12,5 +12,4 @@ public abstract class User {
     }
 
     public abstract boolean authenticate(String room, String grade, String classRoom, String name);
-
 }
