@@ -21,7 +21,7 @@ public class ApplySystem {
             } else {
                 sleepover = "토요외박";
             }
-
+        
             System.out.print("목적지:");
             String place_apply = scanner.nextLine();
 
