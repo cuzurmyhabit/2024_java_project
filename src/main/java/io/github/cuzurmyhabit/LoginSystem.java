@@ -38,19 +38,19 @@ public class LoginSystem {
         int choice = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("호실을 입력하세요: ");
+        System.out.print("호실 입력: ");
         int room = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("학년을 입력하세요: ");
+        System.out.print("학년 입력: ");
         int grade = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("반을 입력하세요: ");
+        System.out.print("반 입력: ");
         int classNumber = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("이름을 입력하세요: ");
+        System.out.print("이름 입력: ");
         String name = scanner.nextLine();
 
         Firestore db = FirestoreClient.getFirestore();
