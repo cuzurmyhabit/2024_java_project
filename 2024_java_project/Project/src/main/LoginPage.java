@@ -99,7 +99,7 @@ public class LoginPage {
                 String room = roomField.getText();
                 String name = nameField.getText();
 
-                String resultMessage = LoginValidator.checkLogin(grade, classNumber, room, name);
+                String resultMessage = CheckLogin.checkLogin(grade, classNumber, room, name);
                 if (resultMessage.equals("success")) {
                     JOptionPane.showMessageDialog(frame, "로그인 성공!");
                     frame.dispose();
