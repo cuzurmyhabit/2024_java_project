@@ -58,17 +58,29 @@ class ApplyPanel extends JPanel {
         add(stayButton);
     }
 
-    // 잔류 데이터를 파일에 저장하는 메서드
+ // 잔류 데이터를 파일에 저장하는 메서드
     private void saveStayData(String roomNumber, String userName) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("data/stay.txt", true))) {
-            writer.write(roomNumber + "," + userName + ",잔류");
-            writer.newLine();
+        try (BufferedWriter writer1 = new BufferedWriter(new FileWriter("data/stay.txt", true));
+             BufferedWriter writer2 = new BufferedWriter(new FileWriter("data/myapply.txt", true))) {
+
+            String data = roomNumber + "," + userName + ",잔류";
+            
+            // 첫 번째 파일 (stay.txt) 저장
+            writer1.write(data);
+            writer1.newLine();
+
+            // 두 번째 파일 (myapply.txt) 저장
+            writer2.write(data);
+            writer2.newLine();
+
             JOptionPane.showMessageDialog(null, "잔류 신청이 완료되었습니다!");
+
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "파일 저장 중 오류가 발생했습니다.");
             ex.printStackTrace();
         }
     }
+
 }
 
 // 메인 프레임
@@ -94,13 +106,13 @@ public class ChoosePage {
         // 학년, 반, 번호 설정
         String grade = "1";
         String classroom = "4";
-        String studentNumber = "406";
+        String room = "406";
 
         // 파일에서 사용자 이름 가져오기
-        String userName = getUserNameFromFile("data/students.txt", grade, classroom, studentNumber);
+        String userName = getUserNameFromFile("data/students.txt", grade, classroom, room);
 
         // 호실 계산 (예: 406 -> 4층 06호)
-        String roomNumber = classroom + studentNumber.substring(1);
+        String roomNumber = classroom + room.substring(1);
 
         // 메인 페이지 실행
         new ChoosePage(userName, roomNumber);
