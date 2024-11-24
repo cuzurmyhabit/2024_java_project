@@ -11,7 +11,6 @@ class OutApplyPage extends JFrame {
     private JTextField roomField, nameField, contactField, dateField, destinationField;
 
     public OutApplyPage(String presetName, String presetRoom) {
-        // JFrame 설정
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(350, 600);
         setLayout(new GridLayout(8, 1, 10, 10));

@@ -88,9 +88,6 @@ public class MyPage extends JFrame {
         add(scrollPane, BorderLayout.CENTER);
     }
 
-    /**
-     * myapply.txt 데이터를 읽어와 날짜, 목적지, 외박 정보를 반환하는 메서드.
-     */
     private List<String[]> loadHistoryData(String filePath) {
         List<String[]> historyData = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {

@@ -20,24 +20,76 @@ public class managerMain {
         // 첫 번째 탭: 잔류 학생
         JPanel tab1 = createTab("data/stay.txt", "이번 주 잔류 사생", Color.PINK);
 
-        // 두 번째 탭: 외박 학생
-        JPanel tab2 = createTab("data/friday_out.txt", "이번 주 외박 사생", Color.PINK);
+        // 두 번째 탭: 금, 토 외박 학생
+        JPanel tab2 = createTab("data/friday_out.txt", "data/saturday_out.txt", "이번 주 외박 사생", Color.PINK);
 
-        // 세 번째 탭
-        JPanel tab3 = new JPanel();
-        tab3.setBackground(Color.CYAN);
-        tab3.add(new JLabel("Tab 3"));
+        // 세 번째 탭: 제출된 외박증
+        JPanel tab3 = createTab("data/Checkin.txt", "제출된 외박증", Color.PINK);
 
         // 탭에 패널 추가
         tabbedPane.addTab("이번 주 잔류 사생", tab1);
         tabbedPane.addTab("이번 주 외박 사생", tab2);
-        tabbedPane.addTab("Tab 3", tab3);
+        tabbedPane.addTab("제출된 외박증", tab3);
 
         // JTabbedPane을 JFrame에 추가
         frame.add(tabbedPane);
 
         // 프레임 표시
         frame.setVisible(true);
+    }
+
+    // 금요일과 토요일 외박 학생을 처리하는 새로운 메서드
+    private static JPanel createTab(String fridayFilePath, String saturdayFilePath, String tabTitle, Color headerColor) {
+        JPanel tabPanel = new JPanel();
+        tabPanel.setLayout(new BorderLayout());
+
+        // 두 파일에서 학생 정보 읽기
+        List<String> studentDetails = readStudentDetails(fridayFilePath, saturdayFilePath);
+        int studentCount = studentDetails.size();
+
+        // 상단 헤더 패널 생성
+        JPanel headerPanel = new JPanel();
+        headerPanel.setBackground(headerColor);
+        headerPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
+
+        JLabel headerLabel = new JLabel(tabTitle + ": " + studentCount + "명");
+        headerLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
+        headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        headerPanel.add(headerLabel);
+
+        tabPanel.add(headerPanel, BorderLayout.NORTH);
+
+        // 학생 정보 패널 생성
+        JPanel studentPanel = new JPanel();
+        studentPanel.setBackground(Color.WHITE);
+        studentPanel.setLayout(new BoxLayout(studentPanel, BoxLayout.Y_AXIS));
+
+        for (String detail : studentDetails) {
+            JLabel studentLabel = new JLabel(detail);
+            studentLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
+            studentLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+            studentPanel.add(studentLabel);
+        }
+
+        // 스크롤 가능하도록 설정
+        JScrollPane scrollPane = new JScrollPane(studentPanel);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        tabPanel.add(scrollPane, BorderLayout.CENTER);
+
+        return tabPanel;
+    }
+
+    // 금요일과 토요일 외박 학생 정보를 읽는 메서드
+    private static List<String> readStudentDetails(String fridayFilePath, String saturdayFilePath) {
+        List<String> studentDetails = new ArrayList<>();
+
+        // 금요일 외박 학생 정보 읽기
+        studentDetails.addAll(readStudentDetails(fridayFilePath));
+
+        // 토요일 외박 학생 정보 읽기
+        studentDetails.addAll(readStudentDetails(saturdayFilePath));
+
+        return studentDetails;
     }
 
     // 공통된 탭 생성 로직을 함수로 리팩토링
@@ -99,11 +151,12 @@ public class managerMain {
                         if (filePath.contains("stay")) {
                             studentDetails.add("호실: " + room + " | 이름: " + name);
                         }
-                        // "friday_out.txt" 파일에서는 외박인 학생만 필터링
-                        else if (filePath.contains("friday") && parts.length >= 4) {
+                        // "friday_out.txt" 또는 "saturday_out.txt" 파일에서는 외박인 학생만 필터링
+                        else if ((filePath.contains("friday") || filePath.contains("saturday")) && parts.length >= 4) {
                             String status = parts[3].trim(); // 외박 여부
-                            if (status.equals("금토외박")) {
-                                studentDetails.add("호실: " + room + " | 이름: " + name);
+                            if (status.equals("금토외박") || status.equals("토요외박")) {
+                                String stayType = status.equals("금토외박") ? "금토외박" : "토요외박";
+                                studentDetails.add("호실: " + room + " | 이름: " + name + " | 외박: " + stayType);
                             }
                         }
                     }
