@@ -1,11 +1,12 @@
 package main;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.DayOfWeek;
 import java.io.*;
 
 public class ChoosePage {
@@ -32,30 +33,33 @@ public class ChoosePage {
     }
 
     public static void main(String[] args) {
-        // 학년, 반, 번호 설정
-        String grade = "1";
-        String classroom = "4";
-        String room = "406";
+        // 전달된 학년, 반, 호실 값을 사용하여 사용자 이름과 방 번호를 가져옴
+        String grade = args[0];
+        String classroom = args[1];
+        String room = args[2];
+
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // 파일에서 사용자 이름 가져오기
         String userName = getUserName("data/students.txt", grade, classroom, room);
-
         String roomNumber = classroom + room.substring(1);
 
         // 메인 페이지 실행
         new ChoosePage(userName, roomNumber);
-
     }
-
 
     // 파일에서 학년, 반, 번호에 해당하는 이름 찾기
     public static String getUserName(String filePath, String grade, String classroom, String studentNumber) {
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) { 	//BufferedReader: 입력 받은 데이터가 String으로 고정, Scanner보다 속도 빠름
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) { // BufferedReader: 입력 받은 데이터가 String으로 고정, Scanner보다 속도 빠름
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(","); // ","로 데이터 분리
-                if (parts.length == 4
-                        && parts[0].trim().equals(grade) 	//trim: 앞, 뒤 공백 제거
+                if (parts.length == 5 // 비밀번호 필드 추가됨
+                        && parts[0].trim().equals(grade) // trim: 앞, 뒤 공백 제거
                         && parts[1].trim().equals(classroom)
                         && parts[2].trim().equals(studentNumber)) {
                     return parts[3].trim(); // 이름 반환
@@ -94,7 +98,6 @@ public class ChoosePage {
             });
 
             // 외박 신청 버튼
-         // 외박 신청 버튼
             JButton outButton = new JButton("외박 신청하러 가기");
             outButton.setBackground(Color.PINK);
             outButton.setFont(new Font("나눔고딕", Font.BOLD, 15));
@@ -147,7 +150,6 @@ public class ChoosePage {
                 }
             });
             add(stayButton);
-
         }
 
         // 잔류 데이터를 파일에 저장하는 메서드
