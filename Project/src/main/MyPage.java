@@ -53,7 +53,7 @@ public class MyPage extends JFrame {
         historyPanel.add(Box.createVerticalStrut(5)); // 제목과 첫 항목 사이 간격 축소
 
         // 히스토리 데이터 로드
-        List<String[]> historyData = loadHistoryData("data/myapply.txt");
+        List<String[]> historyData = loadHistoryData("data/students_solo/jisoomin.txt");
 
         for (String[] record : historyData) {
             JPanel recordPanel = new JPanel();
