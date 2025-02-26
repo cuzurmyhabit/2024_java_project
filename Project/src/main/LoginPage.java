@@ -44,8 +44,8 @@ public class LoginPage {
         classBox.setPreferredSize(fieldSize);
 
         JLabel roomLabel = new JLabel("호실:");
-        JTextField roomField = new JTextField();
-        roomField.setPreferredSize(fieldSize);
+        JComboBox<String> roomBox = new JComboBox<>(new String[]{"401", "402", "403", "404", "405", "406"});
+        classBox.setPreferredSize(fieldSize);
 
         JLabel nameLabel = new JLabel("이름:");
         JTextField nameField = new JTextField();
@@ -55,8 +55,8 @@ public class LoginPage {
         JPasswordField passwordField = new JPasswordField();
         passwordField.setPreferredSize(fieldSize);
 
-        // ✅ 수정: createLoginButton()에 passwordField 전달
-        JButton loginButton = createLoginButton(frame, gradeBox, classBox, roomField, nameField, passwordField);
+        // createLoginButton()에 passwordField 전달
+        JButton loginButton = createLoginButton(frame, gradeBox, classBox, roomBox, nameField, passwordField);
 
         // 그리드 배치
         screen.gridx = 0;
@@ -78,7 +78,7 @@ public class LoginPage {
         frame.add(roomLabel, screen);
 
         screen.gridx = 1;
-        frame.add(roomField, screen);
+        frame.add(roomBox, screen);
 
         screen.gridx = 0;
         screen.gridy = 3;
@@ -94,7 +94,7 @@ public class LoginPage {
         screen.gridx = 1;
         frame.add(passwordField, screen);
 
-        // ✅ 수정: 버튼이 한 번만 추가되도록 수정
+        // 버튼이 한 번만 추가되도록 수정
         screen.gridx = 0;
         screen.gridy = 5;
         screen.gridwidth = 2;
@@ -103,7 +103,7 @@ public class LoginPage {
     }
 
     // 로그인 버튼
-    private JButton createLoginButton(JFrame frame, JComboBox<String> gradeBox, JComboBox<String> classBox, JTextField roomField, JTextField nameField, JPasswordField passwordField) {
+    private JButton createLoginButton(JFrame frame, JComboBox<String> gradeBox, JComboBox<String> classBox, JComboBox<String> roomBox, JTextField nameField, JPasswordField passwordField) {
         JButton loginButton = new JButton("로그인");
         loginButton.setBackground(Color.PINK);
         loginButton.setOpaque(true);
@@ -115,7 +115,7 @@ public class LoginPage {
             public void actionPerformed(ActionEvent e) {
                 String grade = gradeBox.getSelectedItem().toString();
                 String classNumber = classBox.getSelectedItem().toString();
-                String room = roomField.getText();
+                String room = roomBox.getSelectedItem().toString();
                 String name = nameField.getText();
                 String password = new String(passwordField.getPassword()); // 비밀번호 가져오기
 
@@ -144,11 +144,11 @@ class CheckLogin {
                 String[] studentInfo = line.split(",");
 
                 if (studentInfo.length == 5) { // 비밀번호 필드 추가됨
-                    boolean gradeMatch = studentInfo[0].equals(grade);
-                    boolean classMatch = studentInfo[1].equals(classNumber);
-                    boolean roomMatch = studentInfo[2].equals(room);
-                    boolean nameMatch = studentInfo[3].equals(name);
-                    boolean passwordMatch = studentInfo[4].equals(password); // 비밀번호 검증
+                    boolean gradeMatch = studentInfo[0].trim().equals(grade);
+                    boolean classMatch = studentInfo[1].trim().equals(classNumber);
+                    boolean roomMatch = studentInfo[2].trim().equals(room);
+                    boolean nameMatch = studentInfo[3].trim().equals(name);
+                    boolean passwordMatch = studentInfo[4].trim().equals(password); // 비밀번호 검증
 
                     if (gradeMatch && classMatch && roomMatch && nameMatch && passwordMatch) {
                         return "success";
